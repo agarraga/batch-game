@@ -38,7 +38,7 @@ fn run() -> Result<(), pa::Error> {
 
     let callback = move |pa::OutputStreamCallbackArgs { buffer, frames, .. }| {
         let mut idx = 0;
-        for _ in 0..frames {
+        for _frame in 0..frames {
             buffer[idx] = sine[left_phase];
             buffer[idx + 1] = sine[right_phase];
             left_phase += 1;
