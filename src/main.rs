@@ -18,7 +18,7 @@ fn main() {
     let table_size          = args[2].parse::<usize>().unwrap();
     let left_phase_offset   = args[3].parse::<i32>().unwrap();
     let right_phase_offset  = args[4].parse::<i32>().unwrap();
-    let idx_offset          = args[4].parse::<i32>().unwrap();
+    let idx_offset          = args[5].parse::<i32>().unwrap();
 
     match run(seconds, table_size, left_phase_offset, right_phase_offset, idx_offset) {
         Ok(_) => {}
