@@ -13,11 +13,14 @@ const TABLE_SIZE: usize = 2048;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let seconds:    i32     = args[1].parse::<i32>().unwrap();
-    let table_size: usize   = args[2].parse::<usize>().unwrap();
-    let left_phase: i32     = args[3].parse::<i32>().unwrap();
-    let right_phase: i32    = args[4].parse::<i32>().unwrap();
-    match run(seconds, table_size, left_phase, right_phase) {
+
+    let seconds             = args[1].parse::<i32>().unwrap();
+    let table_size          = args[2].parse::<usize>().unwrap();
+    let left_phase_offset   = args[3].parse::<i32>().unwrap();
+    let right_phase_offset  = args[4].parse::<i32>().unwrap();
+    let idx_offset          = args[4].parse::<i32>().unwrap();
+
+    match run(seconds, table_size, left_phase_offset, right_phase_offset, idx_offset) {
         Ok(_) => {}
         error => {
             eprintln!("oh noes! this happened: {:?}", error)
@@ -28,7 +31,8 @@ fn main() {
 fn run(seconds: i32,
        table_size: usize,
        left_phase_offset: i32,
-       right_phase_offset: i32
+       right_phase_offset: i32,
+       idx_offset: i32
        ) -> Result<(), pa::Error> {
     println!( "DOING FIRST TODO ITEM");
 
@@ -59,7 +63,7 @@ fn run(seconds: i32,
             if right_phase >= table_size {
                 right_phase -= table_size;
             }
-            idx += 1;
+            idx += idx_offset as usize;
         }
         pa::Continue
     };
