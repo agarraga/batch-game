@@ -8,7 +8,7 @@
 
 [x] Get a rust app to make a sound
 
-[ ] Get a rust app to play a wav (or any lossless audio format)
+[x] Get a rust app to play a wav (or any lossless audio format)
 
 #### Graphix
 
