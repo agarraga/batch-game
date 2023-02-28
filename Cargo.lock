@@ -12,7 +12,10 @@ checksum = "d468802bab17cbc0cc575e9b053f41e72aa36bfa6b7f55e3529ffa43161b97fa"
 name = "batch-game"
 version = "0.1.0"
 dependencies = [
+ "libc",
+ "pkg-config",
  "portaudio",
+ "x11",
 ]
 
 [[package]]
@@ -83,5 +86,15 @@ dependencies = [
  "bitflags",
  "libc",
  "num",
+ "pkg-config",
+]
+
+[[package]]
+name = "x11"
+version = "2.21.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "502da5464ccd04011667b11c435cb992822c2c0dbde1770c988480d312a0db2e"
+dependencies = [
+ "libc",
  "pkg-config",
 ]
