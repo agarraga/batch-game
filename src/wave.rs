@@ -2,6 +2,7 @@ extern crate portaudio;
 
 use std::io::Read;
 use std::io::BufReader;
+use std::process::exit;
 use std::fs::File;
 use std::env::Args;
 use portaudio as pa;
@@ -15,15 +16,20 @@ pub fn main(mut args: Args) {
     let wave_file = File::open(path).unwrap();
     let mut reader = BufReader::new(wave_file);
     let mut buffer: Vec<u8> = Vec::new();
-
     reader.read_to_end(&mut buffer);
-
+    match args.next() {
+        Some(_) => {
+            print_bytes(buffer);
+            exit(0);
+        },
+        None => ()
+    }
     play_wave(buffer);
 
 }
 
 fn print_bytes(buffer: Vec<u8>) {
-    for i in 0..24 {
+    for i in 0..buffer.len() {
         println!("{:#04x}", buffer[i]);
     }
 }
@@ -66,7 +72,7 @@ fn play_wave(wave: Vec<u8>) -> Result<(), pa::Error> {
 
     stream.start()?;
 
-    pa.sleep(3_000);
+    pa.sleep(60_000);
 
     stream.stop()?;
     stream.close()?;

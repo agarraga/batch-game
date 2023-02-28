@@ -4,10 +4,10 @@ use std::env::Args;
 use portaudio as pa;
 use std::f64::consts::PI;
 
-const CHANNELS:     i32 = 2;
-const SAMPLE_RATE:  f64 = 44_100.0;
+const CHANNELS: i32     = 2;
+const SAMPLE_RATE: f64  = 44_100.0;
 const FRAMES_PER_BUFFER: u32 = 64;
-const TABLE_SIZE: usize = 44_100;
+const TABLE_SIZE: usize = SAMPLE_RATE as usize;
 
 pub fn main(mut args: Args) {
 
@@ -71,8 +71,6 @@ fn run(seconds: i32,
 
     stream.stop()?;
     stream.close()?;
-
-    println!("Check      box");
 
     Ok(())
 }
