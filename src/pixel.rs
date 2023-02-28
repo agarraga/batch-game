@@ -18,17 +18,21 @@ pub unsafe fn main() {
     XSelectInput(display, window, StructureNotifyMask);
     XMapWindow(display, window);
     let graphical_context = XCreateGC(display, window, 0, NIL as *mut XGCValues );
-    XSetForeground(display, graphical_context, white_color);
+    XSetForeground(display, graphical_context, black_color);
     loop {
-        let mut event: XEvent;
-        event = zeroed();
+        let mut event: XEvent = zeroed();
         XNextEvent(display, &mut event);
         match event.type_ {
             MapNotify => break,
             _ => ()
         }
     }
-    XDrawLine(display, window, graphical_context, 10, 60, 180, 20);
-    XFlush(display);
+    // XDrawLine(display, window, graphical_context, 10, 60, 180, 20);
+    for i in 0..24 {
+        XClearWindow(display, window);
+        XDrawPoint(display, window, graphical_context, i, i);
+        sleep(Duration::from_secs(1));
+        XFlush(display);
+    }
     sleep(Duration::from_secs(10));
 }
