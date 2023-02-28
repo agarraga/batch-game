@@ -12,8 +12,8 @@
 
 #### Graphix
 
-[ ] Get rust to draw a pixel
+[x] Get rust to draw a pixel
 
-[ ] Get rust to create a window
+[x] Get rust to create a window
 
-[ ] Get rust to draw a moving pixel in said window
+[x] Get rust to draw a moving pixel in said window
