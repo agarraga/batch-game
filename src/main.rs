@@ -2,17 +2,15 @@ use std::env;
 use std::env::Args;
 
 mod sine;
-mod wave;
-mod pixel;
+use sine::StereoPhase;
 
 fn main() {
-    let mut args: Args = env::args();
-    unsafe {
-        match args.nth(1).unwrap().as_str() {
-            "sine" => sine::main(args),
-            "wave" => wave::main(args),
-            "pixel" => pixel::main(),
-            _ => ()
+    let phase = StereoPhase {left: 440, right: 440};
+
+    match sine::run_stereo_sine_stream(phase) {
+        Ok(_) => {},
+        error => {
+            eprintln!("oh noes! This happened: {:?}", error);
         }
     }
 }

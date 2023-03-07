@@ -6,6 +6,10 @@ use std::thread::sleep;
 use std::time::Duration;
 use std::mem::zeroed;
 
+mod sine {
+    include!("sine.rs");
+}
+
 const NIL: *const i8 = 0 as *const i8;
 
 pub unsafe fn main() {
@@ -15,20 +19,23 @@ pub unsafe fn main() {
     let window = XCreateSimpleWindow(
         display, XDefaultRootWindow(display),
         0, 0, 480, 320, 0, black_color, white_color);
+
     XSelectInput(display, window, StructureNotifyMask);
     XMapWindow(display, window);
+
     let graphical_context = XCreateGC(display, window, 0, NIL as *mut XGCValues );
+
     XSetForeground(display, graphical_context, black_color);
+
     loop {
         let mut event: XEvent = zeroed();
         XNextEvent(display, &mut event);
         #[allow(non_upper_case_globals)]
         match event.type_ {
-            MapNotify => break, 
+            MapNotify => break,
             _ => ()
         }
     }
-
     let draw_rectangle = move |a: [i32; 2], b: [i32; 2], c: [i32; 2], d: [i32; 2]| {
         XDrawLine(display, window, graphical_context, a[0], a[1], b[0], b[1]);
         XDrawLine(display, window, graphical_context, b[0], b[1], d[0], d[1]);
@@ -44,17 +51,21 @@ pub unsafe fn main() {
     b = [48, 12];
     c = [12, 48];
     d = [48, 48];
-    loop {
 
+    loop {
         let mut key_event_code: u32 = 0;
+
         XSelectInput(display, window, KeyPressMask | KeyReleaseMask);
+
         while XPending(display) != 0 {
+
             let mut key_event: XEvent = zeroed();
             XNextEvent(display, &mut key_event);
+
             #[allow(non_upper_case_globals)]
             match key_event.type_ {
                 KeyPress => { key_event_code = key_event.key.keycode; },
-                KeyRelease => { key_event_code = key_event.key.keycode; },
+                // KeyRelease => { key_event_code = key_event.key.keycode; },
                 _ => ()
             }
         }
@@ -90,6 +101,7 @@ pub unsafe fn main() {
         draw_rectangle(a, b, c, d);
         sleep(Duration::from_millis(50));
         XFlush(display);
+        // sine::run(440, 440).unwrap();
     }
 }
 
